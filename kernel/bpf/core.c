@@ -290,10 +290,13 @@ struct bpf_prog *bpf_patch_insn_single(struct bpf_prog *prog, u32 off,
 }
 
 #ifdef CONFIG_BPF_JIT
+# define BPF_JIT_LIMIT_DEFAULT	(PAGE_SIZE * 40000)
+
 /* All BPF JIT sysctl knobs here. */
 int bpf_jit_enable   __read_mostly = IS_BUILTIN(CONFIG_BPF_JIT_ALWAYS_ON);
 int bpf_jit_harden   __read_mostly;
 int bpf_jit_kallsyms __read_mostly;
+int bpf_jit_limit    __read_mostly = BPF_JIT_LIMIT_DEFAULT;
 
 static __always_inline void
 bpf_get_prog_addr_region(const struct bpf_prog *prog,
@@ -504,14 +507,16 @@ u64 __weak bpf_jit_alloc_exec_limit(void)
 #endif
 }
 
+#if defined(MODULES_VADDR)
 static int __init bpf_jit_charge_init(void)
 {
 	/* Only used as heuristic here to derive limit. */
-	bpf_jit_limit = min_t(u64, round_up(bpf_jit_alloc_exec_limit() >> 2,
-					    PAGE_SIZE), LONG_MAX);
+	bpf_jit_limit = min_t(u64, round_up((MODULES_END - MODULES_VADDR) >> 2,
+					    PAGE_SIZE), INT_MAX);
 	return 0;
 }
 pure_initcall(bpf_jit_charge_init);
+#endif
 
 static int bpf_jit_charge_modmem(u32 pages)
 {
