@@ -26,7 +26,6 @@
 #include <linux/types.h>
 #include <linux/mm.h>
 #include <linux/cpu.h>
-
 #include <asm/cpu.h>
 #include <asm/cpufeature.h>
 #include <asm/cpu_ops.h>
