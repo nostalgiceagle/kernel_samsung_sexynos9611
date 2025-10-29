@@ -39,6 +39,10 @@
 
 #include "smpboot.h"
 
+// @c52ec604bcdbf6f5aff03f7b72b59753cf058bc8
+// stub
+enum cpu_mitigations cpu_mitigations = CPU_MITIGATIONS_AUTO;
+
 /**
  * cpuhp_cpu_state - Per cpu hotplug state storage
  * @state:	The current cpu state
