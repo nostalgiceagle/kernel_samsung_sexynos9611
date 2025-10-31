@@ -858,6 +858,7 @@ static bool unmap_kernel_at_el0(const struct arm64_cpu_capabilities *entry,
 	};
 	char const *str = "kpti command line option";
 	bool meltdown_safe;
+	u64 pfr0 = read_sysreg(ID_AA64PFR0_EL1);
 
 	meltdown_safe = is_midr_in_range_list(read_cpuid_id(), kpti_safe_list);
 
