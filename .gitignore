@@ -1,0 +1,11 @@
+out/                                                                                      scripts/crypto/__pycache__/
+scripts/fmp/__pycache__/                                                                  security/samsung/defex_lsm/defex_packed_rules.bin
+security/samsung/defex_lsm/defex_packed_rules.inc                                         security/samsung/defex_lsm/pack_rules
+toolchain/                                                                        
+patch
+*.patch
+*.orig
+*.rej
+*.bak
+*.txt
+lll
